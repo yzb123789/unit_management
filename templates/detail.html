@@ -1,0 +1,43 @@
+{%extends "base.html"%}
+{%block title%}登陆界面{%endblock%}
+{%block head%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/detail.css')}}">
+{%endblock%}
+{%block body%}
+<div class="row" style="margin-top: 20px;">
+    <div class="col"></div>
+    <div class="col-10" style="background-color: #fff;padding: 20px;">
+        <h3 class="page-title">钢铁侠是怎样炼成的</h3>
+        <p class="question-info">
+            <span>作者：托尼史塔克</span>
+            <span>时间：2022年10月30日</span>
+        </p>
+        <hr>
+        <p class="question-content">托尼史塔克的钢铁侠是这样炼成的！</p>
+        <hr>
+        <h4 class="comment-group-title">评论（{{question.answers|length}}）：</h4>
+        <form action="{{url_for('qa.public_answer')}}" method="post">
+            <div class="form-group">
+                <input type="text" placeholder="请填写评论" name="content" class="form-control">
+                <input type="hidden" name="question_id" value="{{question.id}}">
+            </div>
+            <div class="form-group" style="text-align: right;">
+                <button class="btn btn-primary">评论</button>
+            </div>
+        </form>
+        <ul class="comment-group">
+            {%for answer in question.answers%}
+            <li>
+                <div class="user-info">
+                    <img class="avatar" src="../static/images/avatar.jpg" alt="">
+                    <span class="username">{{answer.author.username}}</span>
+                    <span class="create-time">{{answer.create_time}}</span>
+                </div>
+                <p class="comment-content">{{answer.content}}</p>
+            </li>
+            {%endfor%}
+        </ul>
+    </div>
+    <div class="col"></div>
+</div>
+{%endblock%}
